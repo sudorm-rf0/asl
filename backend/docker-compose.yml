@@ -20,10 +20,10 @@ services:
     image: mysql:8.0
     container_name: futures-mysql-master
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-futures123}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: futures_order
       MYSQL_USER: futures
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-futures123}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -47,10 +47,10 @@ services:
     image: mysql:8.0
     container_name: futures-mysql-slave
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-futures123}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: futures_order
       MYSQL_USER: futures
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-futures123}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3307:3306"
     volumes:
@@ -79,11 +79,11 @@ services:
     command:
       - |
         echo "Waiting for MySQL master..."
-        until mysqladmin ping -h mysql-master -u root -pfutures123 --silent; do
+        until mysqladmin ping -h mysql-master -u root -p${MYSQL_ROOT_PASSWORD} --silent; do
           sleep 2
         done
         echo "MySQL ready. Initializing schema..."
-        mysql -h mysql-master -u root -pfutures123 < /scripts/init-schema.sql
+        mysql -h mysql-master -u root -p${MYSQL_ROOT_PASSWORD} < /scripts/init-schema.sql
         echo "Schema initialization complete!"
     volumes:
       - ./infrastructure/scripts/init-schema.sql:/scripts/init-schema.sql:ro
@@ -101,13 +101,13 @@ services:
     container_name: futures-redis-master
     ports:
       - "6379:6379"
-    command: redis-server --requirepass futures123 --appendonly yes
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes
     volumes:
       - redis_data:/data
     networks:
       - futures-net
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "futures123", "ping"]
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -147,7 +147,7 @@ services:
   redis-slave-1:
     image: redis:7-alpine
     container_name: futures-redis-slave-1
-    command: redis-server --slaveof futures-redis-master 6379 --requirepass futures123 --masterauth futures123 --appendonly yes
+    command: redis-server --slaveof futures-redis-master 6379 --requirepass ${REDIS_PASSWORD} --masterauth ${REDIS_PASSWORD} --appendonly yes
     depends_on:
       - redis-master
     networks:
@@ -161,7 +161,7 @@ services:
   redis-slave-2:
     image: redis:7-alpine
     container_name: futures-redis-slave-2
-    command: redis-server --slaveof futures-redis-master 6379 --requirepass futures123 --masterauth futures123 --appendonly yes
+    command: redis-server --slaveof futures-redis-master 6379 --requirepass ${REDIS_PASSWORD} --masterauth ${REDIS_PASSWORD} --appendonly yes
     depends_on:
       - redis-master
     networks:
@@ -204,12 +204,12 @@ services:
       MYSQL_SERVICE_HOST: mysql-master
       MYSQL_SERVICE_PORT: 3306
       MYSQL_SERVICE_USER: futures
-      MYSQL_SERVICE_PASSWORD: ${NACOS_DB_PASSWORD:-futures123}
+      MYSQL_SERVICE_PASSWORD: ${NACOS_DB_PASSWORD}
       MYSQL_SERVICE_DB_NAME: nacos_config
       NACOS_AUTH_ENABLE: "true"
       NACOS_AUTH_TOKEN: ${NACOS_AUTH_TOKEN:-FuturesPlatformSecretKey2024ForJWT}
       NACOS_AUTH_IDENTITY_KEY: "futures"
-      NACOS_AUTH_IDENTITY_VALUE: "futures123"
+      NACOS_AUTH_IDENTITY_VALUE: "${NACOS_AUTH_IDENTITY_VALUE}"
       JVM_XMS: 256m
       JVM_XMX: 512m
       JVM_XMN: 128m
@@ -426,7 +426,7 @@ services:
     container_name: futures-grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-futures123}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
       - GF_INSTALL_PLUGINS=grafana-piechart-panel
     volumes:
       - grafana_data:/var/lib/grafana

@@ -37,3 +37,7 @@ nacos-server/nacos/logs/
 
 # SSL private keys (dev-only, regenerate if missing)
 infrastructure/certs/*.key
+
+# 密钥文件，禁止提交
+backend/infrastructure/certs/futures-key.pem
+**/keystore.p12

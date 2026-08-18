@@ -68,7 +68,7 @@ services:
       NACOS_AUTH_ENABLE: "true"
       NACOS_AUTH_TOKEN: ${NACOS_AUTH_TOKEN:-FuturesPlatformSecretKey2024ForJWT}
       NACOS_AUTH_IDENTITY_KEY: ${NACOS_AUTH_IDENTITY_KEY:-futures}
-      NACOS_AUTH_IDENTITY_VALUE: ${NACOS_AUTH_IDENTITY_VALUE:-futures123}
+      NACOS_AUTH_IDENTITY_VALUE: ${NACOS_AUTH_IDENTITY_VALUE}
     ports:
       - "8848:8848"
     depends_on:
@@ -316,7 +316,7 @@ services:
     container_name: futures-grafana
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-futures123}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
       - GF_SERVER_HTTP_PORT=3002
     ports:
       - "3002:3002"

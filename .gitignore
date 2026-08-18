@@ -54,3 +54,7 @@ health.html
 rebuilded_up.py
 skills-lock.json
 watchdog.sh
+
+# 密钥文件，禁止提交
+backend/infrastructure/certs/futures-key.pem
+**/keystore.p12

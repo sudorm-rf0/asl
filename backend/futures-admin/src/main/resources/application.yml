@@ -64,7 +64,7 @@ management:
 
 # JWT 配置
 jwt:
-  secret: ${JWT_SECRET:futures-admin-secret-key-2024-rsa-encrypted}
+  secret: ${JWT_SECRET}
   expiration: 86400000  # 24小时
   refresh-expiration: 604800000  # 7天
 

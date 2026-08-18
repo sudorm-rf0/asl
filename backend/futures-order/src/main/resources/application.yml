@@ -99,4 +99,4 @@ management:
 
 # JWT 配置（与管理后台共享密钥）
 jwt:
-  secret: futures-admin-secret-key-2024-rsa-encrypted
+  secret: ${JWT_SECRET}
