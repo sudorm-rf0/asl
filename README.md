@@ -1,6 +1,36 @@
-# ASL — 期货交易平台
+<div align="center">
 
-全栈期货交易系统。覆盖 Android 交易客户端、Java 微服务后端、运营管理后台和 Web 行情终端。基于事件驱动架构和微服务拆分。
+# ⚡ ASL 期货交易平台
+
+**全栈期货交易系统** · Android 客户端 · Java 微服务后端 · 运营后台 · Web 行情终端
+
+![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-purple?logo=kotlin&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-6DB33F?logo=springboot&logoColor=white)
+![Vue](https://img.shields.io/badge/Vue_3-4FC08D?logo=vuedotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?logo=react&logoColor=black)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+
+![GitHub stars](https://img.shields.io/github/stars/sudorm-rf0/asl)
+![GitHub license](https://img.shields.io/github/license/sudorm-rf0/asl)
+![GitHub last commit](https://img.shields.io/github/last-commit/sudorm-rf0/asl)
+
+</div>
+
+---
+
+基于**事件驱动架构**与**微服务拆分**的完整期货交易平台，覆盖移动端、后端、运营后台与行情终端全链路。
+
+## ✨ 特性
+
+- 📱 **Android 客户端** — Kotlin + Jetpack Compose，Auth → Market → Trading → Positions → Push
+- 🔧 **微服务后端** — Java 21 + Spring Boot 3.2，10 个服务按业务域拆分
+- ⚡ **高性能撮合** — LMAX Disruptor 无锁撮合引擎
+- 🛡 **风控体系** — 独立风控服务：检查、强平、限额
+- 📊 **可观测** — Prometheus + Grafana + ELK 全链路监控
+- 🔐 **安全加固** — JWT 鉴权、密钥环境变量化、证书轮换
 
 ## 架构总览
 
@@ -39,7 +69,7 @@
    Web Terminal (React, :5173) ───► Gateway (:8088)
 ```
 
-## 快速启动
+## 🚀 快速启动
 
 ```bash
 # 1. 启动基础设施
@@ -64,7 +94,7 @@ cd ../admin-ui  && tmux new-session -d -s admin-ui "vite --port 8090 --host"
 bash start.sh start
 ```
 
-## 服务端口
+## 🧩 服务端口
 
 | 服务 | 端口 | 说明 |
 |------|------|------|
@@ -85,7 +115,7 @@ bash start.sh start
 | MySQL | 3306 | 数据库 |
 | Redis | 6379 | 缓存 |
 
-## 技术栈
+## 🛠 技术栈
 
 | 层 | 技术 |
 |------|------|
@@ -98,7 +128,7 @@ bash start.sh start
 | 监控 | Prometheus, Grafana, ELK |
 | 容器 | Docker, GHCR |
 
-## 文档
+## 📚 文档
 
 | 文档 | 说明 |
 |------|------|
